@@ -1,6 +1,6 @@
 package it.polito.tdp.Ruzzle.model;
 
-import java.util.List;
+import java.util.*;
 
 import it.polito.tdp.Ruzzle.db.DizionarioDAO;
 import javafx.beans.property.SimpleStringProperty;
@@ -50,6 +50,19 @@ public class Model {
 	public List<Pos> trovaParola(String parola) {
 		Ricerca ricerca = new Ricerca();
 		return ricerca.trovaParola(parola, this.board);
+	}
+
+
+	public List<String> trovaTutte() {
+		List<String> trovate = new ArrayList<String>();
+		
+		for(String parola : dizionario) {
+			if(parola.length()>1) {
+				if(trovaParola(parola.toUpperCase())!=null)
+					trovate.add(parola);
+			}
+		}
+		return trovate;
 	}
 	
 
