@@ -1,6 +1,6 @@
 package it.polito.tdp.Ruzzle.model;
 
-public class Pos {
+public class Pos {                              //indica la coordinata
 	private int row;
 	private int col;
 

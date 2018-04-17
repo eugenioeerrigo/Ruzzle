@@ -8,19 +8,20 @@ import javafx.beans.property.StringProperty;
 
 public class Model {
 	private final int SIZE = 4;
-	private Board board ;
+	private Board board ;                // campo di gioco
 	private List<String> dizionario ;
 	private StringProperty statusText ;
 
 	public Model() {
 		this.statusText = new SimpleStringProperty() ;
 		
-		this.board = new Board(SIZE);
-		DizionarioDAO dao = new DizionarioDAO() ;
-		this.dizionario = dao.listParola() ;
+		this.board = new Board(SIZE);                       //creo nuova tabella
+		DizionarioDAO dao = new DizionarioDAO() ;             
+		this.dizionario = dao.listParola() ;                //leggo dizionario da DB
 		statusText.set(String.format("%d parole lette", this.dizionario.size())) ;
 	
 	}
+	
 	
 	public void reset() {
 		this.board.reset() ;
@@ -43,6 +44,12 @@ public class Model {
 
 	public final void setStatusText(final String statusText) {
 		this.statusTextProperty().set(statusText);
+	}
+
+
+	public List<Pos> trovaParola(String parola) {
+		Ricerca ricerca = new Ricerca();
+		return ricerca.trovaParola(parola, this.board);
 	}
 	
 

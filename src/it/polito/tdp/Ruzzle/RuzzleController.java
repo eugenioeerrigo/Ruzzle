@@ -6,6 +6,7 @@ package it.polito.tdp.Ruzzle;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -21,7 +22,7 @@ public class RuzzleController {
 	
 	private Model model ; 
 	
-	private Map<Pos,Button> letters ;
+	private Map<Pos,Button> letters ;          //mappa che mette in corrispondenza le celle nelle posizioni Pos con i bottoni
 	
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -92,6 +93,21 @@ public class RuzzleController {
 
     @FXML
     void handleProva(ActionEvent event) {
+    	String parola = txtParola.getText() ;
+    	
+    	if(parola.length()==0) {
+    		//TODO: segnala errore
+    		return ;
+    	}
+    	
+    	parola = parola.toUpperCase() ;
+    	
+    	//TODO: dovrei ancora controllare che ci siano solo caratteri A-Z
+    	
+    	List<Pos> percorso = model.trovaParola(parola) ;
+    	
+    	System.out.println(percorso);
+    	
 
     }
     

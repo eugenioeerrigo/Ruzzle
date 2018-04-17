@@ -13,9 +13,9 @@ import javafx.beans.property.StringProperty;
  * @author Fulvio
  *
  */
-public class Board {
+public class Board {                                 //griglia= elenco di posizioni possibili
 	private List<Pos> positions;
-	private Map<Pos, StringProperty> cells;
+	private Map<Pos, StringProperty> cells;          //contenuto delle celle - StringProperty per fare il binding(cambia automaticamente il valore alla pressione del button)
 
 	private int size;
 
@@ -29,14 +29,14 @@ public class Board {
 		this.positions = new ArrayList<>();
 		for (int row = 0; row < this.size; row++) {
 			for (int col = 0; col < this.size; col++) {
-				this.positions.add(new Pos(row, col));
+				this.positions.add(new Pos(row, col));               //aggiungo 16 oggetti Pos
 			}
 		}
 
 		this.cells = new HashMap<>();
 
 		for (Pos p : this.positions) {
-			this.cells.put(p, new SimpleStringProperty());
+			this.cells.put(p, new SimpleStringProperty());          //contenuto delle celle (ci metto una StringProperty di stringa nulla)
 		}
 	}
 	
@@ -63,12 +63,27 @@ public class Board {
 	/**
 	 * Crea una nuova scacchiera generando tutte lettere casuali
 	 */
-	public void reset() {
+	public void reset() { 
 		for(Pos p: this.positions) {
 			int random = (int)(Math.random()*26) ;
 			String letter = Character.toString((char)('A'+random)) ;
 			this.cells.get(p).set(letter); 
 		}
+	}
+
+	public List<Pos> getAdiacenti(Pos ultima) {
+		List<Pos> result = new ArrayList<Pos>();
+		
+		for(int riga=-1; riga<=1; riga++) {                    //tutte le 9 posizioni nell'intorno della cella
+			for(int colonna=-1; colonna<=1; colonna++) {
+				if(riga!=0 || colonna!=0) {                    //=if(! (riga==0 && colonna==0))  -> escludo la cella stessa (offset (0,0))
+					Pos p = new Pos(ultima.getRow()+riga, ultima.getCol()+colonna);
+					if(positions.contains(p))                  //aggiunge la posizione solo se non sono uscito dalla board
+						result.add(p);
+				}
+			}
+		}
+		return result;
 	}
 
 	
